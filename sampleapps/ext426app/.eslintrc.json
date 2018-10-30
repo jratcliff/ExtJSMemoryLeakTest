@@ -1,0 +1,67 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:extjs-upgrade/recommended"
+    ],
+    "plugins": [
+         "extjs-upgrade"
+    ],
+    "globals": {
+        "Ext": true,
+        "Ext4App": true,
+        "My": true
+    },
+    "env": {
+        "browser": true
+    },
+    "rules": {
+        // "extjs-upgrade/override-class": "off",
+        // "extjs-upgrade/override-method-call": 0,
+        "no-alert": 0,
+        "no-console": 0,
+        "consistent-this": ["warn", "me"],
+        "indent": ["warn", 4, { "SwitchCase": 1 }],
+        "linebreak-style": 0,
+        "no-tabs": "warn",
+        "quotes": ["warn", "single", { "avoidEscape": true }],
+        "curly": ["warn", "multi-line"],
+        "object-curly-spacing": ["warn", "always"],
+        "no-implicit-globals": "error",
+        "no-loop-func": "error",
+        "yoda": "error",
+        "semi": ["error", "always"],
+        "eqeqeq": ["warn", "smart"],
+        "no-multi-spaces": "warn",
+        "no-trailing-spaces": ["warn", { "ignoreComments": true }],
+        "no-lone-blocks": "warn",
+        "comma-dangle": ["error", "never"],
+        "comma-spacing": ["warn", { "before": false, "after": true }],
+        "space-before-function-paren": ["warn", "always"],
+        "space-before-blocks": ["warn", "always"],
+        "space-infix-ops": "warn",
+        "spaced-comment": ["warn", "always"],
+        "no-label-var": "error",
+        "no-whitespace-before-property": "error",
+        "no-const-assign": "warn",
+        "no-this-before-super": "warn",
+        "no-undef": "error",
+        "no-unreachable": "warn",
+        "no-use-before-define": "warn",
+        "constructor-super": "warn",
+        "valid-typeof": "warn",
+        "one-var" : 0,
+        "vars-on-top": 0,
+        "no-unused-vars": ["warn", { "vars": "all", "args": "none" }],
+        "padding-line-between-statements": 0,
+        "no-multiple-empty-lines": "warn",
+        "eol-last": ["warn", "always"],
+        "key-spacing": ["warn", {
+            "beforeColon": false,
+            "afterColon": true
+        }],
+        "keyword-spacing": ["warn", {
+            "before": true,
+            "after": true
+        }]
+    }
+}
