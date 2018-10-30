@@ -49,6 +49,13 @@ Ext.define('Ext4App.view.Main', {
             xtype: 'gridpanel',
             title: 'Simpsons',
             store: Ext.data.StoreManager.lookup('simpsonsStore'),
+            dockedItems: [{
+                xtype: 'toolbar',
+                id: 'InternalToolsTabBar:ReturnTabBarLink',
+                items: [{
+                    text: 'testing'
+                }]
+            }],
             columns: [
                 {
                     header: 'id of row', // done via css in index.html

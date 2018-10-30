@@ -12,29 +12,31 @@ Ext.define('overrides.AbstractComponent', {
         if (Ext.reuseAutoIds && autoIdReuseCache && autoIdReuseCache[xtype] && autoIdReuseCache[xtype].length > 0) {
             reuseId = autoIdReuseCache[xtype].pop();
             console.log('Reusing auto-id:' + reuseId);
-            return reuseId.split('-')[1]; // return the number part
+            return reuseId.split('-').pop(); // return the number part, which will be the last item in the array
         } else {
+            console.log('NOT reusing auto-id, generating a new one...');
             return this.callParent();
         }
     },
 
     /**
-     * Override that will keep track of auto-generted ids as components
-     * are destroyed so that these ids can be re-used and thus help reduce
+     * Override that will keep track of auto-generated ids as components
+     * are destroyed so that these ids can be reused and thus help reduce
      * a dynamic id memory leak bug in IE.
      */
     destroy: function () {
         var me = this,
             id = me.id,
             idArray = Ext.reuseAutoIds && Ext.isString(id) ? id.split('-') : false,
-            xtype = idArray && idArray.length === 2 ? idArray[0] : undefined,
-            autoId = idArray && idArray.length === 2 ? idArray[1] : undefined;
+            len = idArray ? idArray.length : 0,
+            autoId = len >= 2 ? idArray.pop() : undefined,
+            xtype = len >= 2 ? idArray.join('-') : undefined;
 
         if (!Ext.autoIdReuseCache) {
             Ext.autoIdReuseCache = {};
         }
 
-        // only save the id if is in the in the format of {xtype}-{number}
+        // only save the id if it is in the format of {xtype}-{number}
         if (xtype && Ext.isNumeric(autoId)) {
             console.log('Saving auto-id: ' + id);
             if (!Ext.autoIdReuseCache[xtype]) {
