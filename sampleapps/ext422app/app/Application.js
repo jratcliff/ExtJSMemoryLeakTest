@@ -1,5 +1,5 @@
 Ext.define('overrides.AbstractComponent', {
-    override: 'Ext.AbstractComponent',
+    override: 'Ext.Component',
 
     /**
      * Override that will reuse any generated ids if they exist
@@ -14,8 +14,8 @@ Ext.define('overrides.AbstractComponent', {
             console.log('Reusing auto-id:' + reuseId);
             return reuseId.split('-').pop(); // return the number part, which will be the last item in the array
         } else {
-            console.log('NOT reusing auto-id, generating a new one...');
-            return this.callParent();
+            console.log('NOT reusing auto-id for xtype ' + xtype);
+            return Ext.AbstractComponent.prototype.getAutoId.call(this);
         }
     },
 
@@ -27,10 +27,10 @@ Ext.define('overrides.AbstractComponent', {
     destroy: function () {
         var me = this,
             id = me.id,
+            xtype = me.xtype,
             idArray = Ext.reuseAutoIds && Ext.isString(id) ? id.split('-') : false,
             len = idArray ? idArray.length : 0,
-            autoId = len >= 2 ? idArray.pop() : undefined,
-            xtype = len >= 2 ? idArray.join('-') : undefined;
+            autoId = len >= 2 ? idArray.pop() : undefined;
 
         if (!Ext.autoIdReuseCache) {
             Ext.autoIdReuseCache = {};
@@ -41,11 +41,11 @@ Ext.define('overrides.AbstractComponent', {
             console.log('Saving auto-id: ' + id);
             if (!Ext.autoIdReuseCache[xtype]) {
                 Ext.autoIdReuseCache[xtype] = [id];
-            } else {
+            } else if (!Ext.Array.contains(Ext.autoIdReuseCache[xtype], id)) {
                 Ext.autoIdReuseCache[xtype].push(id);
             }
         }
-        return me.callParent(arguments);
+        return Ext.AbstractComponent.prototype.destroy.apply(this, arguments);
     }
 });
 
@@ -165,7 +165,7 @@ Ext.define('Ext422App.Application', {
                     {
                         priority: 0
                     }
-                ],
+                ]
             });
         }
     }
